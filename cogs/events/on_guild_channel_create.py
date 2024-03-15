@@ -9,7 +9,7 @@ class OnChannelCreate(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_channel_create(self,channel:discord.TextChannel):
-        Channels().insert(channel.id,channel.guild.id)
+        await Channels().insert(channel)
 
 def setup(bot:discord.Bot):
     bot.add_cog(OnChannelCreate(bot))
