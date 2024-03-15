@@ -25,7 +25,7 @@ Funktionen:
 
 Create Bifröst - Erstellt einen Tor Server und trägt die neue Guild ID so wie Invite Link in die DB, sollte es schon einen Tor Server geben, so wird dieser überschrieben. - Erstellt einen Channel namens Midgard und löscht alle anderen Channels. - Sendet eine Nachricht an den Channel Midgard mit Regeln, einem Dropdown für mehrere Server(holt sich die Servernamen aus der DB) und ein Invite request Button. - Passt den Channel an, so dass niemand schreiben darf.
 
-Insert Server - Invite Link wird gesendet per Slash Command, bot joined Server, Server ID und Name wird an DB gesendet.
+Insert Server - Erstellt Invite Link und fügt die ID, Name und Invite Link in die DB
 
 Backup - Schaltet Backup für einen Channel aus oder ein, je nachdem was in der DB steht, beim erstellen eines Channels wird hasBackup auf True gesetzt, es ist vom Standard aus an.
 
