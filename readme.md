@@ -25,8 +25,6 @@ Funktionen:
 
 Create Bifröst - Erstellt einen Tor Server und trägt die neue Guild ID so wie Invite Link in die DB, sollte es schon einen Tor Server geben, so wird dieser überschrieben. - Erstellt einen Channel namens Midgard und löscht alle anderen Channels. - Sendet eine Nachricht an den Channel Midgard mit Regeln, einem Dropdown für mehrere Server(holt sich die Servernamen aus der DB) und ein Invite request Button. - Passt den Channel an, so dass niemand schreiben darf.
 
-Insert Server - Erstellt Invite Link und fügt die ID, Name und Invite Link in die DB
-
 Backup - Schaltet Backup für einen Channel aus oder ein, je nachdem was in der DB steht, beim erstellen eines Channels wird hasBackup auf True gesetzt, es ist vom Standard aus an.
 
 Recovery - Wiederherstellung eines Discord Servers, funktioniert nur wenn der Server der wiedergestellt werden soll nicht mehr existiert.
@@ -72,3 +70,36 @@ date_time datetime,
 userId bigint,
 constraint fk_Channel_Message foreign key(channelId) references Channels(id)
 );
+
+Aufgaben:
+
+- Slash Commands:
+
+  - create bifroest []
+  - recovery []
+  - show servers []
+
+- Events:
+
+  - error []
+  - on guild join []
+  - on member join []
+  - on ready []
+  - discord.on_guild_remove(guild) []
+  - discord.on_guild_update(before, after) []
+  - discord.on_guild_channel_create(channel) [<3]
+  - discord.on_member_remove(member) []
+  - discord.on_message(message) [<3]
+  - discord.on_message_edit(before, after) []
+
+- Logic:
+
+  - Guild in DB [<3]
+  - Channel in DB []
+  - Message in DB []
+
+Ideen:
+
+- Events:
+
+- Slash Commands:
