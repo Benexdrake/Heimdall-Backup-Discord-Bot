@@ -6,7 +6,7 @@ import logic.bifroest_logic
 #import os
 #from dotenv import load_dotenv
 
-class CreateBifroest(commands.cog):
+class CreateBifroest(commands.Cog):
     def __init__(self,bot:discord.Bot):
         self.bot = bot
 

@@ -13,7 +13,7 @@ class OnMemberJoin(commands.Cog):
             color=discord.Color.orange()
         )
 
-        channel = await self.bot.fetch_channel(1044857228697554975)
+        channel = await self.bot.fetch_channel(1215205031205277767)
 
         await channel.send(embed=embed)
 

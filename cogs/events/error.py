@@ -8,7 +8,7 @@ class Error(commands.Cog):
 
     @commands.Cog.listener()
     async def on_application_command_error(self,ctx:commands.Context,error):
-        channel = await self.bot.fetch_channel(1207776175225835530)
+        channel = await self.bot.fetch_channel(1215205031205277767)
         ctx.respond(f'You got an Error: {error}')
         await channel.send(f'Es ist ein Fehler aufgetreten ```{error}```')
         raise error

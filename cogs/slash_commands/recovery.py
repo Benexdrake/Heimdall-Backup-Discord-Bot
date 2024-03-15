@@ -7,7 +7,7 @@ import logic.recovery_logic
 #import os
 #from dotenv import load_dotenv
 
-class Recovery(commands.cog):
+class Recovery(commands.Cog):
     def __init__(self,bot:discord.Bot):
         self.bot = bot
 
