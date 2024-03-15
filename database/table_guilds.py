@@ -18,16 +18,15 @@ class TableGuild:
     
     async def insert_update(self,id, name, invite):
         guild = await self.get(id=id)
-        
         ctx = DbContext()
         q = ""
-        if guild:
+        if len(guild) == 0:
             q = f"""
-                insert into guilds values ({id},'{name}','{invite}')
+                insert into guilds values ({id},'{name}','{invite}');
                 """
         else:
             q = f"""
-                update guilds set guildName = '{name}', inviteUrl = '{invite}' where id = {id}
+                update guilds set guildName = '{name}', inviteUrl = '{invite}' where id = {id};
                 """
         ctx.execute(q)
 
