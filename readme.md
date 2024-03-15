@@ -48,7 +48,7 @@ Database Query:
 create table Guilds
 (
 id bigint primary key,
-guildName varchar(128),
+name varchar(128),
 inviteUrl varchar(128)
 );
 
@@ -56,6 +56,7 @@ create table Channels
 (
 id bigint primary key,
 guildId bigint,
+name string,
 hasBackup boolean,
 constraint fk_Guild_Channel foreign key(guildId) references Guilds(id)
 );
@@ -81,22 +82,24 @@ Aufgaben:
 
 - Events:
 
-  - error []
-  - on guild join []
+  - error [<3]
+  - on guild join [<3]
   - on member join []
-  - on ready []
+  - on ready [<3]
   - discord.on_guild_remove(guild) []
-  - discord.on_guild_update(before, after) []
+  - discord.on_guild_update(before, after) [<3]
   - discord.on_guild_channel_create(channel) [<3]
+  - discord.on_guild_channel_delete(channel) []
   - discord.on_member_remove(member) []
   - discord.on_message(message) [<3]
-  - discord.on_message_edit(before, after) []
+  - discord.on_message_edit(before, after) [<3]
+  - discord.on_message_delete(message) [<3]
 
 - Logic:
 
   - Guild in DB [<3]
-  - Channel in DB []
-  - Message in DB []
+  - Channel in DB [<3]
+  - Message in DB [<3]
 
 Ideen:
 
