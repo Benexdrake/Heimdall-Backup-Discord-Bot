@@ -27,7 +27,7 @@ class DbContext:
         create table Guilds
         (
 	        id bigint primary key,
-            guildName varchar(128),
+            name varchar(128),
             inviteUrl varchar(128)
         );
         """
@@ -37,6 +37,7 @@ class DbContext:
         (
 	        id bigint primary key,
             guildId bigint,
+            name varchar(128),
             hasBackup boolean,
             constraint fk_Guild_Channel foreign key(guildId) references Guilds(id) 
         );

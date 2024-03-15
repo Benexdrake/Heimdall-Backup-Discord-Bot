@@ -15,3 +15,10 @@ class Messages:
             update messages set message ='{message.content}' where id == {message.id};
             """
         ctx.execute(q);
+
+    def delete(self, id):
+        ctx = DbContext()
+        q = f"""
+            delete from messages where id == {id};
+            """
+        ctx.execute(q);

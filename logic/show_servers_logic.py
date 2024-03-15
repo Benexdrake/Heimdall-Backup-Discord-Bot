@@ -1,13 +1,13 @@
 import discord
 from discord.ext import commands
 
-from database.table_guilds import TableGuild
+from database.guilds import Guilds
 
 class ShowServersLogic():
     #def __init__(self):
 
     async def start(self, ctx:commands.Context):
-        tg = TableGuild()
+        tg = Guilds()
         guilds = await tg.get_all()
         
 
