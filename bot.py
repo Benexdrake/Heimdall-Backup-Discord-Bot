@@ -12,7 +12,7 @@ class Bot(discord.Bot):
         status = discord.Status.dnd
         activity = discord.Activity(type=discord.ActivityType.watching, name='von Asgard aus runter')
 
-        super().__init__(intents=intents, debug_guilds=[1214965274562928751], status=status, activity=activity)
+        super().__init__(intents=intents,debug_guilds=[1214965274562928751] ,status=status, activity=activity)
 
     def run(self):
         db = DbContext()
