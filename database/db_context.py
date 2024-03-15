@@ -23,26 +23,20 @@ class DbContext:
             self.create_database()
 
     def create_database(self):
-        db = self.connect_database()
-        cursor = db.cursor()
-        table_guilds = """
+        tables = """
         create table Guilds
         (
 	        id bigint primary key,
             guildName varchar(128),
             inviteUrl varchar(128)
-        );"""
-
-        table_channels = """
+        );
         create table Channels
         (
 	        id bigint primary key,
             guildId bigint,
             hasBackup boolean,
             constraint fk_Guild_Channel foreign key(guildId) references Guilds(id) 
-        );"""
-        
-        table_messages = """
+        );
         create table Messages
         (
         	id bigint primary key,
@@ -53,43 +47,21 @@ class DbContext:
             userId bigint,
             constraint fk_Channel_Message foreign key(channelId) references Channels(id)
         );"""
-        cursor.execute(table_guilds)
-        cursor.execute(table_channels)
-        cursor.execute(table_messages)
+        print('Create DB')
+        self.execute(tables)
+
+    def execute(self,query:str):
+        db = self.connect_database()
+        cursor = db.cursor()
+        cursor.executescript(query)
+        result = cursor.fetchall()
+
         db.commit()
         db.close()
 
-    def insert_update_guild(self,id, name, invite):
-        print("Get Guild")
-        guild = self.get_guild(id)
+        return result  
         
-        db = self.connect_database()
-        cursor = db.cursor()
-        q = ""
-        if len(guild) == 0:
-            print("Insert Guild")
-            q = f"""
-                insert into guilds values ({id},'{name}','{invite}')
-                """
-        else:
-            print("Update Guild")
-            q = f"""
-                update guilds set id = {id}, guildName = '{name}', inviteUrl = '{invite}' where id = {id}
-                """
-        cursor.execute(q);
-        db.commit()
-        db.close()
 
-    def get_guild(self,id):
-        db = self.connect_database()
-        cursor = db.cursor()
-
-        guild = cursor.execute(f"select * from Guilds where id == {id}").fetchall()
-        if len(guild) > 0:
-            print(guild)
-        db.close()
-        return guild
-        
 
 
 

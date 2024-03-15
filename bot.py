@@ -2,7 +2,7 @@ import discord
 import os
 from dotenv import load_dotenv
 
-from logic.db_context import DbContext
+from database.db_context import DbContext
 
 class Bot(discord.Bot):
     def __init__(self):
