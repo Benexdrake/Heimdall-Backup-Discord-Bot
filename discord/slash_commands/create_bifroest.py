@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from discord.commands import slash_command
 
+import logic.bifroest_logic
 #import os
 #from dotenv import load_dotenv
 
@@ -22,3 +23,6 @@ class CreateBifroest(commands.cog):
         # Fügt Text für Regeln in Midgard
         # Fragt die DB nach einer Liste von Servern die nicht Bifröst oder Yggdrasil sind ab und erstellt ein Dropdownlist
         # Fügt einen Invite Request Button hinzu
+
+def setup(bot:discord.Bot):
+    bot.add_cog(CreateBifroest(bot))
