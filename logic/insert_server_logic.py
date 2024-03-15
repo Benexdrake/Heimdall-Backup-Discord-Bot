@@ -10,16 +10,15 @@ class InsertServerLogic():
     def __init__(self):
         load_dotenv()
 
-    async def start(self,ctx:commands.Context):
-        guildId = ctx.guild.id
-        guildName = ctx.guild.name
+    async def start(self,guild:discord.Guild):
+        guildId = guild.id
+        guildName = guild.name
         inviteLink = ""
 
-        for channel in ctx.guild.channels:
+        for channel in guild.channels:
             if channel.type == discord.ChannelType.text:
                 inviteLink = await channel.create_invite(max_age=0, max_uses=0)
                 break
         if inviteLink != "":
             tg = TableGuild()
             await tg.insert_update(id=guildId, name=guildName, invite=inviteLink)
-        await ctx.respond("Hi")
