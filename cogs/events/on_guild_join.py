@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 
-from logic.insert_server_logic import InsertServerLogic
+from lib.inviteLink import InviteLink
+from database.guilds import Guilds
 
 class OnGuildJoin(commands.Cog):
     def __init__(self, bot:discord.Bot):
@@ -9,9 +10,8 @@ class OnGuildJoin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self,guild:discord.Guild):
-        # send Guild ID, Name and create a invite Link into db
-        logic = InsertServerLogic()
-        await logic.start(guild)
+        invite = await InviteLink().create(guild)
+        await Guilds().insert(guild, invite)
         
 
 def setup(bot:discord.Bot):
