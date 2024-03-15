@@ -23,13 +23,16 @@ class DbContext:
             self.create_database()
 
     def create_database(self):
-        tables = """
+        guilds = """
         create table Guilds
         (
 	        id bigint primary key,
             guildName varchar(128),
             inviteUrl varchar(128)
         );
+        """
+
+        channels = """
         create table Channels
         (
 	        id bigint primary key,
@@ -37,6 +40,9 @@ class DbContext:
             hasBackup boolean,
             constraint fk_Guild_Channel foreign key(guildId) references Guilds(id) 
         );
+        """
+
+        messages = """
         create table Messages
         (
         	id bigint primary key,
@@ -46,16 +52,17 @@ class DbContext:
             date_time datetime,
             userId bigint,
             constraint fk_Channel_Message foreign key(channelId) references Channels(id)
-        );"""
-        print('Create DB')
-        self.execute(tables)
+        );
+        """
+        self.execute(guilds)
+        self.execute(channels)
+        self.execute(messages)
 
     def execute(self,query:str):
         db = self.connect_database()
         cursor = db.cursor()
-        cursor.executescript(query)
+        cursor.execute(query)
         result = cursor.fetchall()
-
         db.commit()
         db.close()
 

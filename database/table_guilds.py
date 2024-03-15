@@ -12,7 +12,7 @@ class TableGuild:
     
     async def get_all(self):
         ctx = DbContext()
-        result = ctx.execute(f'select * from Guilds')
+        result = ctx.execute(f'SELECT * FROM Guilds;')
         print(result)
         return result
     
