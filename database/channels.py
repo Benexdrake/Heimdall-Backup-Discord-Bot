@@ -40,6 +40,6 @@ class Channels:
     async def delete(self, channel):
         ctx = DbContext()
         q = f"""
-            delete from channels where id == {channel.id};
+            delete from channels where id = {channel.id};
             """
         ctx.execute(q);

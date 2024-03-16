@@ -27,3 +27,10 @@ class Guilds:
             update guilds set name = '{guild.name}', inviteUrl= '{invite}' where id = {guild.id};
             """
         ctx.execute(q)
+    
+    async def delete(self, name):
+        ctx = DbContext()
+        q = f"""
+            delete from guilds where name = '{name}';
+            """
+        ctx.execute(q)
