@@ -10,6 +10,7 @@ class ServerEmbed:
         if len(g) == 0:
             return
         url = g[0][2]
+       
 
         channelNames = []
         for channel in guild.channels:
@@ -24,7 +25,13 @@ class ServerEmbed:
             color=discord.Color.blue()
         )
 
-        embed.set_author(name="Click for join Server", url=url, icon_url=guild.icon.url)
+            
+        if url != 'None':
+            if guild.icon != None:
+                embed.set_author(name="Click for join Server", url=url, icon_url=guild.icon.url)
+            else:
+                embed.set_author(name="Click for join Server", url=url)
+        
 
         embed.set_footer(text=guild.created_at)
 
