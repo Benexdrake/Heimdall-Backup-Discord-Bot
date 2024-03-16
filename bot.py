@@ -6,8 +6,9 @@ from database.db_context import DbContext
 
 class Bot(discord.Bot):
     def __init__(self):
-        intents = discord.Intents.default()
+        intents = discord.Intents.all()
         intents.message_content = True
+        intents.guilds = True
         intents.members = True
         status = discord.Status.dnd
         activity = discord.Activity(type=discord.ActivityType.watching, name='von Asgard aus runter')
