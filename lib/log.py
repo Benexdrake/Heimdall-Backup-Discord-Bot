@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 class Log:
-    def __init__(self, bot:discord.Bot):
+    def __init__(self, bot:discord.Bot | discord.Client):
         load_dotenv()
         self.bot = bot
 
