@@ -4,6 +4,7 @@ from discord import PermissionOverwrite, Role, Member
 from cogs.buttons.invite import InviteButtonView
 from database.guilds import Guilds
 
+from PIL import Image
 
 
 class BifroestLogic():
@@ -18,13 +19,19 @@ class BifroestLogic():
             if "Midgard" in guild.name:
                 await guild.delete()
                 await Guilds().delete(name='Midgard')
+
+
+        with open("Tor.png", "rb") as f:
+            icon_bytes = f.read()
+
+
         
-        newGuild = await self.bot.create_guild(name='Midgard')
+        newGuild = await self.bot.create_guild(name='Midgard',icon=icon_bytes)
         g = self.bot.get_guild(newGuild.id)
         overwrite = PermissionOverwrite(view_channel=False)
         for c in g.channels:
             await c.set_permissions(c.guild.default_role,overwrite=overwrite)    
-        newChannel = await newGuild.create_text_channel(name='Idavall')
+        newChannel = await newGuild.create_text_channel(name='Idavoll')
         perms = newChannel.overwrites_for(newChannel.guild.default_role)
         perms.send_messages = False
         await newChannel.set_permissions(newChannel.guild.default_role, overwrite=perms)
