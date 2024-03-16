@@ -1,21 +1,15 @@
 import discord
 from discord.ext import commands
 
+from lib.log import Log
+
 class OnMemberJoin(commands.Cog):
     def __init__(self, bot:discord.Bot):
         self.bot = bot
 
     @commands.Cog.listener()
     async def on_member_join(self,member:discord.Member):
-        embed = discord.embed(
-            title='Willkommen',
-            description=f'Hey {member.mention}',
-            color=discord.Color.orange()
-        )
-
-        channel = await self.bot.fetch_channel(1215205031205277767)
-
-        await channel.send(embed=embed)
+        await Log(self.bot).info(f"{member.mention} joined {member.guild.name}")
 
 def setup(bot:discord.Bot):
     bot.add_cog(OnMemberJoin(bot))

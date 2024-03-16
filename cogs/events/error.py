@@ -4,6 +4,8 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 
+from lib.log import Log
+
 
 class Error(commands.Cog):
     
@@ -13,9 +15,9 @@ class Error(commands.Cog):
 
     @commands.Cog.listener()
     async def on_application_command_error(self,ctx:commands.Context,error):
-        channel = await self.bot.fetch_channel(int(os.getenv('LOG')))
+        
+        await Log(self.bot).error(error)
         ctx.respond(f'You got an Error: {error}')
-        await channel.send(f'Es ist ein Fehler aufgetreten ```{error}```')
         raise error
 
 def setup(bot):

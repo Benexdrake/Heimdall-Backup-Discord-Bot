@@ -1,6 +1,9 @@
 from database.db_context import DbContext
 
 class Guilds:
+    def __init__(self):
+        pass
+
     async def get(self,id):
         ctx = DbContext()
         result = ctx.execute(f"select * from Guilds where id == {id};")

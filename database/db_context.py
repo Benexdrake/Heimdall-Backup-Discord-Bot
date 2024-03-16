@@ -38,7 +38,6 @@ class DbContext:
 	        id bigint primary key,
             guildId bigint,
             name varchar(128),
-            hasBackup boolean,
             constraint fk_Guild_Channel foreign key(guildId) references Guilds(id) 
         );
         """
@@ -58,6 +57,7 @@ class DbContext:
         self.execute(guilds)
         self.execute(channels)
         self.execute(messages)
+        print('Database Created')
 
     def execute(self,query:str):
         db = self.connect_database()

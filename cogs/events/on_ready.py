@@ -1,35 +1,29 @@
 import discord
 from discord.ext import commands
 
-from database.channels import Channels
-from database.guilds import Guilds
-from lib.inviteLink import InviteLink
+import os
+from dotenv import load_dotenv
+
+from logic.on_ready_logic import OnMessageCreate
+from cogs.embeds.server_embed import ServerEmbed
 
 class OnReady(commands.Cog):
     
     def __init__(self, bot:discord.Bot):
         self.bot = bot
+        load_dotenv()
 
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'{self.bot.user.name} is Online')
-        for guild in self.bot.guilds:
-            g = await Guilds().get(guild.id)
-            if len(g) == 0:
-                invite = await InviteLink().create(guild)
-                await Guilds().insert(guild,invite)
-            else:
-                t = g[0]
-                await Guilds().update(guild,t[2])
 
-            for channel in guild.channels:
-                if channel.type == discord.ChannelType.text:
-                    c = await Channels().get(channel.id)
-                    if len(c) == 0:
-                        await Channels().insert(channel)
-                    else:
-                        ct = c[0]
-                        await Channels().update(channel.id, ct[3])
+        await OnMessageCreate().insert_update_guilds_channels(self.bot.guilds)
+
+        guild = self.bot.get_guild(int(os.getenv('YGGDRASILID')))
+
+        channelId = await OnMessageCreate().getServerList(guild)
+
+        await OnMessageCreate().sendServerInfos(self.bot.guilds,guild,channelId)
 
 
 def setup(bot:discord.Bot):
