@@ -5,7 +5,7 @@ from database.channels import Channels
 from database.guilds import Guilds
 from lib.inviteLink import InviteLink
 
-class OnMessageCreate:
+class OnReadyLogic:
     async def insert_update_guilds_channels(self, guilds):
         for guild in guilds:
             guildsDb = await Guilds().get(guild.id)
