@@ -4,7 +4,8 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 
-from logic.on_ready_logic import OnMessageCreate
+from logic.bifroest_logic import BifroestLogic
+from logic.on_ready_logic import OnReadyLogic
 from cogs.embeds.server_embed import ServerEmbed
 
 class OnReady(commands.Cog):
@@ -17,13 +18,15 @@ class OnReady(commands.Cog):
     async def on_ready(self):
         print(f'{self.bot.user.name} is Online')
 
-        await OnMessageCreate().insert_update_guilds_channels(self.bot.guilds)
+        await BifroestLogic(self.bot).create()
+
+        await OnReadyLogic().insert_update_guilds_channels(self.bot.guilds)
 
         guild = self.bot.get_guild(int(os.getenv('YGGDRASILID')))
 
-        channelId = await OnMessageCreate().getServerList(guild)
+        channelId = await OnReadyLogic().getServerList(guild)
 
-        await OnMessageCreate().sendServerInfos(self.bot.guilds,guild,channelId)
+        await OnReadyLogic().sendServerInfos(self.bot.guilds,guild,channelId)
 
 
 def setup(bot:discord.Bot):
