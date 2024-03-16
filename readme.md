@@ -29,8 +29,6 @@ Backup - Schaltet Backup für einen Channel aus oder ein, je nachdem was in der 
 
 Recovery - Wiederherstellung eines Discord Servers, funktioniert nur wenn der Server der wiedergestellt werden soll nicht mehr existiert.
 
-Servers - Bot erzeugt eine Liste von allen Servern mit Invite Links als Embed
-
 DB:
 
 Guild: - id: ulong - name: string - inviteUrl: string
@@ -57,7 +55,6 @@ create table Channels
 id bigint primary key,
 guildId bigint,
 name string,
-hasBackup boolean,
 constraint fk_Guild_Channel foreign key(guildId) references Guilds(id)
 );
 
@@ -77,20 +74,18 @@ Aufgaben:
 - Slash Commands:
 
   - create bifroest []
-  - recovery []
-  - show servers []
 
 - Events:
 
   - error [<3]
   - on guild join [<3]
-  - on member join []
+  - on member join [<3]
   - on ready [<3]
-  - discord.on_guild_remove(guild) []
+  - discord.on_guild_remove(guild) [X]
   - discord.on_guild_update(before, after) [<3]
   - discord.on_guild_channel_create(channel) [<3]
-  - discord.on_guild_channel_delete(channel) []
-  - discord.on_member_remove(member) []
+  - discord.on_guild_channel_delete(channel) [<3]
+  - discord.on_member_remove(member) [<3]
   - discord.on_message(message) [<3]
   - discord.on_message_edit(before, after) [<3]
   - discord.on_message_delete(message) [<3]
