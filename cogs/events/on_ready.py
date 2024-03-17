@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 from logic.bifroest_logic import BifroestLogic
 from logic.on_ready_logic import OnReadyLogic
-from cogs.embeds.server_embed import ServerEmbed
 
 class OnReady(commands.Cog):
     

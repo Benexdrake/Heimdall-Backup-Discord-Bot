@@ -1,10 +1,10 @@
 import discord
 from discord import PermissionOverwrite, Role, Member
 
-from cogs.buttons.invite import InviteSelectView
+from cogs.buttons.invite import InviteSelect
 from database.guilds import Guilds
 
-from PIL import Image
+
 
 
 class BifroestLogic():
@@ -20,7 +20,6 @@ class BifroestLogic():
                 await guild.delete()
                 await Guilds().delete(name='Midgard')
 
-
         with open("Tor.png", "rb") as f:
             icon_bytes = f.read()
 
@@ -35,5 +34,18 @@ class BifroestLogic():
         await newChannel.set_permissions(newChannel.guild.default_role, overwrite=perms)
         invite = await newChannel.create_invite()
         await Guilds().update(guild,invite.url)
+
+        guilds = await Guilds().get_all()
+
+        options = []
+
+        for g in guilds:
+            if 'Admin' in g[1]:
+                continue
+            options.append(discord.SelectOption(label=g[1], description='-'))
         
-        await newChannel.send('Regeln',view=InviteSelectView())
+        view = discord.ui.View()
+        select = InviteSelect(custom_id='select_servers',placeholder='Select Server',max_values=len(options),options=options)
+        view.add_item(select)
+
+        await newChannel.send('Regeln',view=view)

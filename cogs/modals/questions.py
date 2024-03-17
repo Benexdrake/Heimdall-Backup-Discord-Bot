@@ -64,14 +64,11 @@ class QuestionModal(discord.ui.Modal):
         embed.add_field(name=os.getenv('q2'), value= q2, inline=False)
         embed.add_field(name=os.getenv('q3'), value= q3, inline=False)
         
-
-        
-
         thread = await inviteChannel.create_thread(name=interaction.user.mention,type=discord.ChannelType.public_thread)
         await thread.send(embed=embed)
         for value in self.values:
-            accept = AcceptButton(id=str(interaction.user.id)+'_accept_'+value)
-            decline = DeclineButton(id=str(interaction.user.id)+'_decline_'+value)
+            accept = AcceptButton(id=str(interaction.user.id)+'_accept_'+value.replace(' ','_'), value=value)
+            decline = DeclineButton(id=str(interaction.user.id)+'_decline_'+value.replace(' ','_'))
             view = discord.ui.View()
             view.add_item(accept)
             view.add_item(decline)
