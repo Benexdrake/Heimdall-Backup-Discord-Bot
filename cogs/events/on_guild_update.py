@@ -13,6 +13,5 @@ class OnGuildUpdate(commands.Cog):
         invite = await InviteLink().create(after)
         await Guilds().update(after,invite)
         
-
 def setup(bot:discord.Bot):
     bot.add_cog(OnGuildUpdate(bot))

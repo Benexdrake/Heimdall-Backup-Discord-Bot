@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 from cogs.buttons.accept import AcceptButton
 from cogs.buttons.decline import DeclineButton
 
-class ReactionModal(discord.ui.Modal):
-    def __init__(self, *args, **kwargs):
+class QuestionModal(discord.ui.Modal):
+    def __init__(self, values,*args, **kwargs):
         super().__init__(
             discord.ui.InputText(
                 label='Twitter Account Url',
@@ -17,24 +17,25 @@ class ReactionModal(discord.ui.Modal):
             ),
             discord.ui.InputText(
                 label='Frage 1:',
-                placeholder="Placeholder",
+                placeholder=os.getenv('q1'),
                 style=discord.InputTextStyle.long, 
                 required=True
             ),
             discord.ui.InputText(
                 label='Frage 2:',
-                placeholder="Placeholder",
+                placeholder=os.getenv('q2'),
                 style=discord.InputTextStyle.long, 
                 required=True
             ),
             discord.ui.InputText(
                 label='Frage 3:',
-                placeholder="Placeholder",
+                placeholder=os.getenv('q3'),
                 style=discord.InputTextStyle.long, 
                 required=True
             ),
             *args,
             **kwargs)
+        self.values = values
         
     async def callback(self, interaction: discord.Interaction):
         load_dotenv()
@@ -59,18 +60,22 @@ class ReactionModal(discord.ui.Modal):
 
         embed.set_author(name=interaction.user.display_name, icon_url=interaction.user.display_avatar) 
 
-        embed.add_field(name=os.getenv('q1'), value= '```' + self.children[1].value+'```', inline=False)
-        embed.add_field(name=os.getenv('q2'), value= '```' + self.children[2].value+'```', inline=False)
-        embed.add_field(name=os.getenv('q3'), value= '```' + self.children[3].value+'```', inline=False)
+        embed.add_field(name=os.getenv('q1'), value= q1, inline=False)
+        embed.add_field(name=os.getenv('q2'), value= q2, inline=False)
+        embed.add_field(name=os.getenv('q3'), value= q3, inline=False)
         
 
-        accept = AcceptButton(id=str(interaction.user.id))
-        decline = DeclineButton()
-        view = discord.ui.View()
-        view.add_item(accept)
-        view.add_item(decline)
+        
 
-        await inviteChannel.send(f'ID: {interaction.user.id}', embed=embed, view=view)
+        thread = await inviteChannel.create_thread(name=interaction.user.mention,type=discord.ChannelType.public_thread)
+        await thread.send(embed=embed)
+        for value in self.values:
+            accept = AcceptButton(id=str(interaction.user.id)+'_accept_'+value)
+            decline = DeclineButton(id=str(interaction.user.id)+'_decline_'+value)
+            view = discord.ui.View()
+            view.add_item(accept)
+            view.add_item(decline)
+            await thread.send(content=value,view=view)
 
         
 

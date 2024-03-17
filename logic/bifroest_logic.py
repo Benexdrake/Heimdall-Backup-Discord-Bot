@@ -1,7 +1,7 @@
 import discord
 from discord import PermissionOverwrite, Role, Member
 
-from cogs.buttons.invite import InviteButtonView
+from cogs.buttons.invite import InviteSelectView
 from database.guilds import Guilds
 
 from PIL import Image
@@ -24,8 +24,6 @@ class BifroestLogic():
         with open("Tor.png", "rb") as f:
             icon_bytes = f.read()
 
-
-        
         newGuild = await self.bot.create_guild(name='Midgard',icon=icon_bytes)
         g = self.bot.get_guild(newGuild.id)
         overwrite = PermissionOverwrite(view_channel=False)
@@ -38,4 +36,4 @@ class BifroestLogic():
         invite = await newChannel.create_invite()
         await Guilds().update(guild,invite.url)
         
-        await newChannel.send('Regeln',view=InviteButtonView())
+        await newChannel.send('Regeln',view=InviteSelectView())

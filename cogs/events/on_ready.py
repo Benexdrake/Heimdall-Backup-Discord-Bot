@@ -19,15 +19,8 @@ class OnReady(commands.Cog):
         print(f'{self.bot.user.name} is Online')
 
         await BifroestLogic(self.bot).create()
-
-        await OnReadyLogic().insert_update_guilds_channels(self.bot.guilds)
-
-        guild = self.bot.get_guild(int(os.getenv('YGGDRASILID')))
-
-        channelId = await OnReadyLogic().getServerList(guild)
-
-        await OnReadyLogic().sendServerInfos(self.bot.guilds,guild,channelId)
-
+        await OnReadyLogic(self.bot).insert_update_guilds_channels(self.bot.guilds)
+        await OnReadyLogic(self.bot).sendServerInfos(self.bot.guilds)
 
 def setup(bot:discord.Bot):
     bot.add_cog(OnReady(bot))

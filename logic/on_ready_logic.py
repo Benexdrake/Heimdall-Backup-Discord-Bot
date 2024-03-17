@@ -1,11 +1,18 @@
 import discord
 
+import os
+from dotenv import load_dotenv
+
 from cogs.embeds.server_embed import ServerEmbed
 from database.channels import Channels
 from database.guilds import Guilds
 from lib.inviteLink import InviteLink
 
 class OnReadyLogic:
+    def __init__(self, bot:discord.Bot):
+        load_dotenv()
+        self.bot = bot
+
     async def insert_update_guilds_channels(self, guilds):
         for guild in guilds:
             guildsDb = await Guilds().get(guild.id)
@@ -24,7 +31,8 @@ class OnReadyLogic:
                     else:
                         await Channels().update(channel)
 
-    async def getServerList(self, guild):
+    async def getServerList(self):
+        guild = self.bot.get_guild(int(os.getenv('YGGDRASILID')))
         channelId = ''
         for channel in guild.channels:
             if channel.name == 'server-list':
@@ -36,8 +44,11 @@ class OnReadyLogic:
             channelId = c.id
         return channelId
     
-    async def sendServerInfos(self,guilds,guild, channelId):
+    async def sendServerInfos(self,guilds):
+    
+        channelId = await self.getServerList()
+
         for g in guilds:
             embed = await ServerEmbed().create(g)
-            getChannel = guild.get_channel(channelId)
+            getChannel =self.bot.get_channel(channelId)
             await getChannel.send(embed=embed)
