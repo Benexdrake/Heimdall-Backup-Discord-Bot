@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from cogs.buttons.accept import AcceptButton
 from cogs.buttons.decline import DeclineButton
+from database.guids import Guids
 
 class QuestionModalLogic:
     def __init__(self, interaction, values, children):
@@ -26,19 +27,23 @@ class QuestionModalLogic:
             color=discord.Color.blue()
         )
 
-        if 'https://twitter.com/' in self.children[0].value:
-            embed.title='Twitter Profile'
-            embed.url=self.children[0].value
-
         embed.set_author(name=self.interaction.user.display_name, icon_url=self.interaction.user.display_avatar) 
 
         embed.add_field(name=os.getenv('q1'), value= q1, inline=False)
         embed.add_field(name=os.getenv('q2'), value= q2, inline=False)
         embed.add_field(name=os.getenv('q3'), value= q3, inline=False)
         
+        check = 'Wrong Code'
+        guid = await Guids().get(self.children[0].value)
 
-        thread = await inviteChannel.create_thread(name=self.interaction.user.display_name,type=discord.ChannelType.public_thread)
-        await thread.send(embed=embed)
+        if guid:
+            if guid[0][0] == self.children[0].value:
+                check = 'Code was right!'
+                await Guids().delete(guid[0][0])
+
+
+        thread = await inviteChannel.create_thread(name=f'Code: {self.children[0].value}',type=discord.ChannelType.public_thread)
+        await thread.send(embed=embed, content=check)
         for value in self.values:
             accept = AcceptButton(id=str(self.interaction.user.id)+'_accept_'+value.replace(' ','_'), value=value)
             decline = DeclineButton(id=str(self.interaction.user.id)+'_decline_'+value.replace(' ','_'))
