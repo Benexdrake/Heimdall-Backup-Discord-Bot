@@ -9,7 +9,7 @@ class OnMessageDelete(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_delete(self, message:discord.Message):
-        Messages().delete(message.id)
+        await Messages().delete(message.id)
 
 def setup(bot:discord.Bot):
     bot.add_cog(OnMessageDelete(bot))

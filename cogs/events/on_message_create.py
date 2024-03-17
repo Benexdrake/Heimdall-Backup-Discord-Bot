@@ -1,17 +1,21 @@
 import discord
 from discord.ext import commands
 
+import os
+from dotenv import load_dotenv
+import requests
+
 from database.messages import Messages
+from logic.on_message_logic import OnMessageLogic
 
 class OnMessage(commands.Cog):
     def __init__(self, bot:discord.Bot):
         self.bot = bot
+     
 
     @commands.Cog.listener()
     async def on_message(self,message:discord.Message):
-        if(message.author.bot or message.author.system):
-            return
-        Messages().insert(message)
+        await OnMessageLogic().create(message)
         
 
 def setup(bot:discord.Bot):

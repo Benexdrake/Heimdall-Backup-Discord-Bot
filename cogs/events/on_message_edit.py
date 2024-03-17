@@ -9,7 +9,7 @@ class OnMessageEdit(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_edit(self,before,after):
-        Messages().update(after)
+        await Messages().update(after)
         
 
 def setup(bot:discord.Bot):
