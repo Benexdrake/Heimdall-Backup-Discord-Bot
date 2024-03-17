@@ -1,9 +1,7 @@
 import discord
 from discord.ext import commands
-
 import os
 from dotenv import load_dotenv
-
 from logic.bifroest_logic import BifroestLogic
 from logic.on_ready_logic import OnReadyLogic
 
@@ -17,8 +15,9 @@ class OnReady(commands.Cog):
     async def on_ready(self):
         print(f'{self.bot.user.name} is Online')
 
-        await BifroestLogic(self.bot).create()
+        newChannel =await BifroestLogic(self.bot).create()
         await OnReadyLogic(self.bot).insert_update_guilds_channels(self.bot.guilds)
+        await BifroestLogic(self.bot).send(newChannel)
         await OnReadyLogic(self.bot).sendServerInfos(self.bot.guilds)
 
 def setup(bot:discord.Bot):
