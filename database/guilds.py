@@ -4,9 +4,14 @@ class Guilds:
     def __init__(self):
         pass
 
-    async def get(self,id):
+    async def get_by_id(self,id):
         ctx = DbContext()
         result = ctx.execute(f"select * from Guilds where id == {id};")
+        return result
+    
+    async def get_by_name(self,name):
+        ctx = DbContext()
+        result = ctx.execute(f"select * from Guilds where name = '{name}';")
         return result
     
     async def get_all(self):

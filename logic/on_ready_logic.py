@@ -15,7 +15,7 @@ class OnReadyLogic:
 
     async def insert_update_guilds_channels(self, guilds):
         for guild in guilds:
-            guildsDb = await Guilds().get(guild.id)
+            guildsDb = await Guilds().get_by_id(guild.id)
             if len(guildsDb) == 0:
                 invite = await InviteLink().create(guild)
                 await Guilds().insert(guild,invite)

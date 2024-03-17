@@ -6,7 +6,7 @@ from database.guilds import Guilds
 
 class ServerEmbed:
     async def create(self, guild:discord.Guild):
-        g = await Guilds().get(guild.id)
+        g = await Guilds().get_by_id(guild.id)
         if len(g) == 0:
             return
         url = g[0][2]

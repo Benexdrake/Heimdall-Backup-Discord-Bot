@@ -10,7 +10,7 @@ class OnGuildJoin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self,guild:discord.Guild):
-        g = await Guilds().get(guild.id)
+        g = await Guilds().get_by_id(guild.id)
         
         invite = await InviteLink().create(guild)
         
