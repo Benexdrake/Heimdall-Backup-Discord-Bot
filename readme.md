@@ -37,11 +37,11 @@ Blacklist: - userID: ulong
 
 Channel: - id: ulong - guildID: ulong - hasBackup boolean
 
-Message: - id: ulong - hasFiles:boolean - message:string - datetime:datetime - userId: ulong
+Message: - id: ulong - message:string - datetime:datetime - userId: ulong
 
 Admin Server Yggdrasil: - Channels: - Invites - Hier sendet Heimdall die Invite Request von Midgard - Logs - Alle wichtigen Informationen werden hier als Log gesendet - Servers - Eine Liste alle vorhandenen Server, wird hinzugefügt sobald ein neuer Server eingetragen wird, mit Information zum Server, so wie einen Invite Link
 
-Database Query:
+Database:
 
 create table Guilds
 (
