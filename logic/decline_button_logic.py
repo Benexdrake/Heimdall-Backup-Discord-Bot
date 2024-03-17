@@ -10,6 +10,6 @@ class DeclineButtonLogic:
         idStr = str(self.custom_id)
         userId = int(idStr.split('_')[0])
 
-        modal = DeclineModal(title=userId)
-        
+        modal = DeclineModal(userId=userId, title='Begründung')
+
         await self.interaction.response.send_modal(modal)
