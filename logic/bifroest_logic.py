@@ -34,13 +34,17 @@ class BifroestLogic():
         await newChannel.set_permissions(newChannel.guild.default_role, overwrite=perms)
         invite = await newChannel.create_invite()
         await Guilds().update(guild,invite.url)
+        return newChannel
 
+        
+
+    async def send(self,newChannel:discord.TextChannel):
         guilds = await Guilds().get_all()
 
         options = []
 
         for g in guilds:
-            if 'Admin' in g[1]:
+            if 'Admin' in g[1] or newChannel.guild.name in g[1]:
                 continue
             options.append(discord.SelectOption(label=g[1], description='-'))
         
