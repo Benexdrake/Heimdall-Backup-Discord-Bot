@@ -6,10 +6,10 @@ class QuestionModal(discord.ui.Modal):
     def __init__(self, values,*args, **kwargs):
         super().__init__(
             discord.ui.InputText(
-                label='Twitter Account Url',
-                placeholder='https://twitter.com/your_username',
+                label='Code aus pn',
+                placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
                 style=discord.InputTextStyle.singleline, 
-                required=False
+                required=True
             ),
             discord.ui.InputText(
                 label='Frage 1:',
