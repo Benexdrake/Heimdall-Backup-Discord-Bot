@@ -12,7 +12,8 @@ class AcceptButton(discord.ui.Button):
         
 
     async def callback(self,interaction:discord.Interaction):
-        userId = int(self.custom_id)
+        idStr = str(self.custom_id)
+        userId = int(idStr.split('_')[0])
 
         user = await interaction.client.fetch_user(int(userId))
 
