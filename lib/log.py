@@ -8,9 +8,13 @@ class Log:
         self.bot = bot
 
     async def info(self,info):
-        logChannel = await self.bot.fetch_channel(int(os.getenv('LOG')))
-        await logChannel.send(info)
+        if os.getenv('LOG') != ' ':
+            logChannel = self.bot.get_channel(int(os.getenv('LOG')))
+            if logChannel:
+                await logChannel.send(info)
 
     async def error(self, error):
-        logChannel = await self.bot.fetch_channel(int(os.getenv('LOG')))
-        await logChannel.send(f'Es ist ein Fehler aufgetreten ```{error}```')
+        if os.getenv('LOG'):
+            logChannel = self.bot.get_channel(int(os.getenv('LOG')))
+            if logChannel:
+                await logChannel.send(f'Es ist ein Fehler aufgetreten ```{error}```')
