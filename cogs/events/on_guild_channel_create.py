@@ -15,7 +15,6 @@ class OnChannelCreate(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_channel_create(self,channel:discord.TextChannel):
-        print(channel.guild.name)
         if 'admin' in channel.guild.name.lower():
             update_env_channel_variable(channel,'LOG')
             update_env_channel_variable(channel,'INVITE')
