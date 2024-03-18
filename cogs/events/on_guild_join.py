@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from lib.inviteLink import InviteLink
+from lib.helper import create_invite_link
 from database.guilds import Guilds
 
 class OnGuildJoin(commands.Cog):
@@ -11,9 +11,7 @@ class OnGuildJoin(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self,guild:discord.Guild):
         g = await Guilds().get_by_id(guild.id)
-        
-        invite = await InviteLink().create(guild)
-        
+        invite = await create_invite_link(guild)
         if g == None:
             await Guilds().insert(guild, invite)
         else:

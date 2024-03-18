@@ -1,6 +1,6 @@
 import discord
 from database.guilds import Guilds
-from lib.log import Log
+from lib.helper import info
 
 import os
 from dotenv import load_dotenv
@@ -30,5 +30,5 @@ class AcceptButtonLogic:
                 message = await self.interaction.response.send_message('Accept')
                 await message.delete_original_response()
                 await self.interaction.message.delete()
-                await Log(self.interaction.client).info(f'User {self.interaction.user.mention} got Accepted for Server {self.value}')
+                await info(self.interaction.client,f'User {self.interaction.user.mention} got Accepted for Server {self.value}')
                 return

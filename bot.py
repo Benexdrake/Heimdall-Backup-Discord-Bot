@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from database.db_context import DbContext
-from logic.check_env import CheckEnv
+from lib.helper import create_env_variables
 
 class Bot(discord.Bot):
     def __init__(self):
@@ -18,21 +18,15 @@ class Bot(discord.Bot):
         super().__init__(intents=intents,debug_guilds=[1214965274562928751] ,status=status, activity=activity)
 
     def run(self):
-
         if os.getenv('BOTTOKEN') == 'INSERT_TOKEN_HERE':
             print('Please insert a Bot Token')
             return
 
-        CheckEnv().check()
-
+        create_env_variables()
         db = DbContext()
-        
         db.load_database()
-
         self.loading('events')
         self.loading('slash_commands')
-
-        load_dotenv()
         super().run(os.getenv('BOTTOKEN'))
 
     def loading(self,folder:str):

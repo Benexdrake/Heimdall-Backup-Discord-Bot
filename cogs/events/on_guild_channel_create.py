@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands
 
 from database.channels import Channels
-from lib.log import Log
+from lib.helper import update_env_channel_variable
+from lib.helper import info
 import os
 from dotenv import load_dotenv,dotenv_values, set_key
 
@@ -14,18 +15,13 @@ class OnChannelCreate(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_channel_create(self,channel:discord.TextChannel):
 
-        dotenv_path = os.path.join(os.getcwd(), ".env")
         if os.getenv('YGGDRASILID'):
             if channel.guild.id == int(os.getenv('YGGDRASILID')):
-                if channel.name == 'log':
-                    if os.getenv('LOG'):
-                        set_key(dotenv_path,key_to_set='LOG', value_to_set=str(channel.id))
-                if channel.name == 'invite':
-                    if os.getenv('INVITE'):
-                        set_key(dotenv_path,key_to_set='INVITE', value_to_set=str(channel.id))
+                update_env_channel_variable(channel,'LOG')
+                update_env_channel_variable(channel,'INVITE')
 
         await Channels().insert(channel)
-        await Log(self.bot).info(f'Created: {channel.name} in {channel.guild.name}')
+        await info(self.bot,f'Created: {channel.name} in {channel.guild.name}')
 
 def setup(bot:discord.Bot):
     bot.add_cog(OnChannelCreate(bot))

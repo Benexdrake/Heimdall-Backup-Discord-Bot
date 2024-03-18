@@ -1,10 +1,8 @@
 import discord
 from discord.ext import commands
 
-import os
 from dotenv import load_dotenv
-
-from lib.log import Log
+from lib.helper import error
 
 
 class Error(commands.Cog):
@@ -15,9 +13,8 @@ class Error(commands.Cog):
 
     @commands.Cog.listener()
     async def on_application_command_error(self,ctx:commands.Context,error):
-        
-        await Log(self.bot).error(error)
-        ctx.respond(f'You got an Error: {error}')
+        await error(self.bot,error)
+        ctx.respond(f'You got an Error:\n{error}')
         raise error
 
 def setup(bot):
