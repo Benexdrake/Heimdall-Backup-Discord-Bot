@@ -14,8 +14,9 @@ class OnReady(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'{self.bot.user.name} is Online')
-
-        newChannel =await BifroestLogic(self.bot).create()
+        inviteChannel = self.interaction.client.get_guild(int(os.getenv('YGGDRASILID'))).get_channel(int(os.getenv('INVITE')))
+        await inviteChannel.purge()
+        newChannel = await BifroestLogic(self.bot).create()
         await OnReadyLogic(self.bot).insert_update_guilds_channels(self.bot.guilds)
         await BifroestLogic(self.bot).send(newChannel)
         await OnReadyLogic(self.bot).sendServerInfos(self.bot.guilds)
