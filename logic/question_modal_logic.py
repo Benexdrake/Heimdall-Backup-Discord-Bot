@@ -6,14 +6,14 @@ from cogs.buttons.decline import DeclineButton
 from database.guids import Guids
 
 class QuestionModalLogic:
-    def __init__(self, interaction, values, children):
+    def __init__(self, interaction:discord.Interaction, values, children):
         self.interaction = interaction
         self.values = values
         self.children = children
         load_dotenv()
 
     async def callback(self):
-        inviteChannel = self.interaction.client.get_guild(int(os.getenv('YGGDRASILID'))).get_channel(int(os.getenv('INVITE')))
+        inviteChannel = self.interaction.client.get_channel(int(os.getenv('INVITE')))
 
         await self.interaction.response.send_message('Ok', ephemeral=True)
 

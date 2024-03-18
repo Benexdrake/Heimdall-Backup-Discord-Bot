@@ -8,6 +8,12 @@ def update_env_channel_variable(channel, variable:str):
         if os.getenv(variable):
             set_key(dotenv_path,key_to_set=variable, value_to_set=str(channel.id))
 
+def update_env_variable(variable:str, value):
+    
+    dotenv_path = os.path.join(os.getcwd(), ".env")
+    if variable in os.environ:
+        set_key(dotenv_path,key_to_set=variable, value_to_set=str(value))
+
 def create_env_variables():
         dotenv_path = os.path.join(os.getcwd(), ".env")
 
@@ -18,11 +24,11 @@ def create_env_variables():
 
         if os.getenv('BOTTOKEN') is None:
             with open(dotenv_path, "a") as f:
-                print('Adding BOTTOKEN into .env')
+                print('ADDING BOTTOKEN into .env')
                 f.write("BOTTOKEN='INSERT_TOKEN_HERE'\n")
         
         if os.getenv('DBNAME') is None:
-            print('Adding DBNAME into .env')
+            print('ADDING DBNAME into .env')
             with open(dotenv_path, "a") as f:
                 f.write("DBNAME='helheim.db'\n")
 
@@ -30,18 +36,31 @@ def create_env_variables():
             print('ADDING FILESPATH into .env')
             with open(dotenv_path, "a") as f:
                 f.write("FILESPATH='FILES'\n")
-        
-        if os.getenv('MIDGARDCHANNEL') is None:
-            with open(dotenv_path, "a") as f:
-                f.write(f"MIDGARDCHANNEL='idavoll'\n")
 
         if os.getenv('LOG') is None:
+            print('ADDING LOG into .env')
             with open(dotenv_path, "a") as f:
                 f.write(f"LOG=' '\n")
 
         if os.getenv('INVITE') is None:
+            print('ADDING INVITE into .env')
             with open(dotenv_path, "a") as f:
                 f.write(f"INVITE=' '\n")
+
+        if os.getenv('q1') is None:
+            print('ADDING q1 into .env')
+            with open(dotenv_path, "a") as f:
+                f.write(f"q1='question 1'\n")
+        if os.getenv('q2') is None:
+            print('ADDING q2 into .env')
+            with open(dotenv_path, "a") as f:
+                f.write(f"q2='question 2'\n")
+        if os.getenv('q3') is None:
+            print('ADDING q3 into .env')
+            with open(dotenv_path, "a") as f:
+                f.write(f"q3='question 3'\n")
+
+
 
 async def purge(guild:discord.Guild, name:str):
     for channel in guild.channels:

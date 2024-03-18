@@ -18,11 +18,14 @@ class Bot(discord.Bot):
         super().__init__(intents=intents,debug_guilds=[1214965274562928751] ,status=status, activity=activity)
 
     def run(self):
+        create_env_variables()
+        
+        load_dotenv()
+
         if os.getenv('BOTTOKEN') == 'INSERT_TOKEN_HERE':
             print('Please insert a Bot Token')
             return
 
-        create_env_variables()
         db = DbContext()
         db.load_database()
         self.loading('events')

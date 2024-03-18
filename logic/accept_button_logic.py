@@ -21,7 +21,7 @@ class AcceptButtonLogic:
         guild = self.interaction.client.get_guild(int(g[0][0]))
 
         for channel in guild.channels:
-            if channel.name == os.getenv('INVITECHANNELNAME'):
+            if channel.type == discord.ChannelType.text:
                 new_invite:discord.Invite = await channel.create_invite(max_uses=1)
                 button = discord.ui.Button(label='Click for Invite',url=new_invite.url)
                 view = discord.ui.View()

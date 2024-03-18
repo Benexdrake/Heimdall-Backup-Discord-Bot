@@ -1,16 +1,17 @@
+import os
 import discord
 from discord import PermissionOverwrite, Role, Member
 
 from cogs.buttons.invite import InviteSelect
 from database.guilds import Guilds
 
-
+from dotenv import load_dotenv
 
 
 class BifroestLogic():
     def __init__(self, bot:discord.Bot):
         self.bot = bot
-        pass
+        load_dotenv()
 
     async def create(self):
         guilds = self.bot.guilds
@@ -28,7 +29,7 @@ class BifroestLogic():
         overwrite = PermissionOverwrite(view_channel=False)
         for c in g.channels:
             await c.set_permissions(c.guild.default_role,overwrite=overwrite)    
-        newChannel = await newGuild.create_text_channel(name='Idavoll')
+        newChannel = await newGuild.create_text_channel(name='idavoll')
         perms = newChannel.overwrites_for(newChannel.guild.default_role)
         perms.send_messages = False
         await newChannel.set_permissions(newChannel.guild.default_role, overwrite=perms)
@@ -44,7 +45,7 @@ class BifroestLogic():
         options = []
 
         for g in guilds:
-            if 'Admin' in g[1] or newChannel.guild.name in g[1]:
+            if 'admin' in g[1].lower() or newChannel.guild.name.lower() in g[1].lower():
                 continue
             options.append(discord.SelectOption(label=g[1], description='-'))
         

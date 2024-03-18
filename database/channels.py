@@ -21,7 +21,7 @@ class Channels:
             data = json.load(f)
             ignore_list = data["Ignore"]
 
-        if channel.guild.id == int(os.getenv('YGGDRASILID')) or channel.name in ignore_list or channel.name == os.getenv('MIDGARDCHANNEL').lower():
+        if 'admin' in channel.guild.name.lower() or channel.name in ignore_list:
             return
 
         ctx = DbContext()

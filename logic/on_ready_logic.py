@@ -6,7 +6,7 @@ from cogs.embeds.server_embed import ServerEmbed
 from database.channels import Channels
 from database.guilds import Guilds
 from lib.helper import create_channel
-from lib.helper import create_invite_link, purge
+from lib.helper import create_invite_link, purge, update_env_variable
 from logic.bifroest_logic import BifroestLogic
 
 class OnReadyLogic:
@@ -16,20 +16,17 @@ class OnReadyLogic:
 
     async def start(self):
         print(f'{self.bot.user.name} is Online')
-        dotenv_path = os.path.join(os.getcwd(), ".env")
+
         for guild in self.bot.guilds:
-            if not os.getenv('YGGDRASILID'):
-                if guild.description:
-                    if 'admin' in guild.description:
-                        with open(dotenv_path, "a") as f:
-                            f.write(f"YGGDRASILID={guild.id}\n")
-            else:
-                if guild.id == int(os.getenv('YGGDRASILID')):
-                        await create_channel(guild,'log')
-                        await create_channel(guild,'invite')
-                        await purge(guild,'log')
-                        await purge(guild,'invite')
-            
+                if 'admin' in guild.name.lower():
+                    c1 = await create_channel(guild,'log')
+                    update_env_variable('LOG', c1.id)
+                    c2 = await create_channel(guild,'invite')
+                    update_env_variable('INVITE', c2.id)
+                    await purge(guild,'log')
+                    await purge(guild,'invite')
+                        
+        load_dotenv()
         newChannel = await BifroestLogic(self.bot).create()
         await self.insert_update_guilds_channels(self.bot.guilds)
         await BifroestLogic(self.bot).send(newChannel)
@@ -53,11 +50,13 @@ class OnReadyLogic:
                         await Channels().update(channel)
 
     async def getServerList(self):
-        guild = self.bot.get_guild(int(os.getenv('YGGDRASILID')))
-        await purge(guild,'server-list')
-        return await create_channel(guild,'server-list')
+        for guild in self.bot.guilds:
+            if 'admin' in guild.name.lower():
+                await purge(guild,'server-list')
+                return await create_channel(guild,'server-list')
     
     async def sendServerInfos(self):
+        load_dotenv()
         channel = await self.getServerList()
         if channel:
             for guild in self.bot.guilds:

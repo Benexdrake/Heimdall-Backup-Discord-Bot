@@ -11,14 +11,14 @@ from dotenv import load_dotenv,dotenv_values, set_key
 class OnChannelCreate(commands.Cog):
     def __init__(self, bot:discord.Bot):
         self.bot = bot
+        load_dotenv()
 
     @commands.Cog.listener()
     async def on_guild_channel_create(self,channel:discord.TextChannel):
-
-        if os.getenv('YGGDRASILID'):
-            if channel.guild.id == int(os.getenv('YGGDRASILID')):
-                update_env_channel_variable(channel,'LOG')
-                update_env_channel_variable(channel,'INVITE')
+        print(channel.guild.name)
+        if 'admin' in channel.guild.name.lower():
+            update_env_channel_variable(channel,'LOG')
+            update_env_channel_variable(channel,'INVITE')
 
         await Channels().insert(channel)
         await info(self.bot,f'Created: {channel.name} in {channel.guild.name}')
