@@ -16,7 +16,7 @@ class OnMessageLogic:
         FILEPATH = os.getenv('FILESPATH')
 
         if len(message.attachments) > 0:
-            path = f'./{FILEPATH}/{message.channel.guild.id}/{message.channel.id}/{message.id}'
+            path = f'{FILEPATH}/{message.channel.guild.id}/{message.channel.id}/{message.id}'
 
             os.makedirs(path, exist_ok=True)
         

@@ -35,17 +35,17 @@ def create_env_variables():
         if os.getenv('FILESPATH') is None:
             print('ADDING FILESPATH into .env')
             with open(dotenv_path, "a") as f:
-                f.write("FILESPATH='FILES'\n")
+                f.write("FILESPATH='./FILES'\n")
 
         if os.getenv('LOG') is None:
             print('ADDING LOG into .env')
             with open(dotenv_path, "a") as f:
-                f.write(f"LOG=' '\n")
+                f.write(f"LOG=''\n")
 
         if os.getenv('INVITE') is None:
             print('ADDING INVITE into .env')
             with open(dotenv_path, "a") as f:
-                f.write(f"INVITE=' '\n")
+                f.write(f"INVITE=''\n")
 
         if os.getenv('q1') is None:
             print('ADDING q1 into .env')
