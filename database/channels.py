@@ -28,14 +28,14 @@ class Channels:
 
         ctx = DbContext()
         q = f"""
-                insert into channels values ({channel.id},{channel.guild.id},'{channel.name}', '{channel.topic}');
+                insert into channels values ({channel.id},{channel.guild.id},'{channel.name}');
             """
         ctx.execute(q);
 
     async def update(self,channel):
         ctx = DbContext()
         q = f"""
-            update channels set name = '{channel.name}', topic = '{channel.topic}' where id == {channel.id};
+            update channels set name = '{channel.name}' where id == {channel.id};
             """
         ctx.execute(q);
 

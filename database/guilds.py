@@ -22,21 +22,15 @@ class Guilds:
     
     async def insert(self,guild:discord.Guild, invite):
         ctx = DbContext()
-        description = None
-        if guild.description:
-            description = guild.description
         q = f"""
-            insert into guilds values ({guild.id},'{guild.name}','{invite}', '{description}');
+            insert into guilds values ({guild.id},'{guild.name}','{invite}');
             """
         ctx.execute(q)
 
     async def update(self, guild, invite):
         ctx = DbContext()
-        description = None
-        if guild.description:
-            description = guild.description
         q = f"""
-            update guilds set name = '{guild.name}', inviteUrl= '{invite}', description = '{description}' where id = {guild.id};
+            update guilds set name = '{guild.name}', inviteUrl= '{invite}' where id = {guild.id};
             """
         ctx.execute(q)
     

@@ -28,8 +28,7 @@ class DbContext:
         (
 	        id bigint primary key,
             name varchar(128),
-            inviteUrl varchar(128),
-            description text
+            inviteUrl varchar(128)
         );
         """
 
@@ -38,8 +37,7 @@ class DbContext:
         (
 	        id bigint primary key,
             guildId bigint,
-            name varchar(128),
-            topic text,
+            name varchar(128)
             constraint fk_Guild_Channel foreign key(guildId) references Guilds(id) 
         );
         """
