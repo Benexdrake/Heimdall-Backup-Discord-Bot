@@ -1,3 +1,4 @@
+import discord
 from database.db_context import DbContext
 import json
 
@@ -15,7 +16,8 @@ class Channels:
             """
         return ctx.execute(q);
 
-    async def insert(self,channel):
+    async def insert(self,channel:discord.TextChannel):
+        
         ignore_list = []
         with open("serverIgnoreList.json", "r") as f:
             data = json.load(f)
@@ -26,14 +28,14 @@ class Channels:
 
         ctx = DbContext()
         q = f"""
-                insert into channels values ({channel.id},{channel.guild.id},'{channel.name}');
+                insert into channels values ({channel.id},{channel.guild.id},'{channel.name}', '{channel.topic}');
             """
         ctx.execute(q);
 
     async def update(self,channel):
         ctx = DbContext()
         q = f"""
-            update channels set name = '{channel.name}' where id == {channel.id};
+            update channels set name = '{channel.name}', topic = '{channel.topic}' where id == {channel.id};
             """
         ctx.execute(q);
 

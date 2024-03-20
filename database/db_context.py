@@ -28,7 +28,8 @@ class DbContext:
         (
 	        id bigint primary key,
             name varchar(128),
-            inviteUrl varchar(128)
+            inviteUrl varchar(128),
+            description text
         );
         """
 
@@ -38,6 +39,7 @@ class DbContext:
 	        id bigint primary key,
             guildId bigint,
             name varchar(128),
+            topic text,
             constraint fk_Guild_Channel foreign key(guildId) references Guilds(id) 
         );
         """
@@ -72,6 +74,7 @@ class DbContext:
         cursor = db.cursor()
         cursor.execute(query)
         result = cursor.fetchall()
+
         db.commit()
         db.close()
 
