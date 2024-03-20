@@ -15,7 +15,7 @@ class OnReadyLogic:
 
     async def start(self):
         print(f'{self.bot.user.name} is Online')
-
+        await self.insert_update_guilds_channels(self.bot.guilds)
         for guild in self.bot.guilds:
                 if 'admin' in guild.name.lower():
                     c1 = await create_channel(guild,'log')
@@ -56,6 +56,5 @@ class OnReadyLogic:
         channel = await self.getServerList()
         if channel:
             for guild in self.bot.guilds:
-
                 embed = await ServerEmbed().create(guild)
                 await channel.send(embed=embed)

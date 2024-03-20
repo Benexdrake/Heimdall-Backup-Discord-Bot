@@ -25,7 +25,6 @@ class ServerEmbed:
             description=description,
             color=discord.Color.blue()
         )
-
         embed.add_field(name='Users: ', value=str(guild.member_count), inline=True)
         embed.add_field(name='Channels: ', value=str(len(guild.channels)), inline=True)
         embed.add_field(name='Mods: ', value=f'{guild.owner.mention}\n{guild.owner.mention}\n{guild.owner.mention}\n{guild.owner.mention}\n{guild.owner.mention}\n', inline=False)
