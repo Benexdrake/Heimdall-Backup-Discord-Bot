@@ -37,7 +37,7 @@ class DbContext:
         (
 	        id bigint primary key,
             guildId bigint,
-            name varchar(128)
+            name varchar(128),
             constraint fk_Guild_Channel foreign key(guildId) references Guilds(id) 
         );
         """
@@ -61,6 +61,7 @@ class DbContext:
             guid varchar(64) primary key
         );
         """
+        
         self.execute(guilds)
         self.execute(channels)
         self.execute(messages)
