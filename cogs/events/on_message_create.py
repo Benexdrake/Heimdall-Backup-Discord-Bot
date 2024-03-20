@@ -1,11 +1,6 @@
 import discord
 from discord.ext import commands
 
-import os
-from dotenv import load_dotenv
-import requests
-
-from database.messages import Messages
 from logic.on_message_logic import OnMessageLogic
 
 class OnMessage(commands.Cog):

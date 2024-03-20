@@ -37,31 +37,6 @@ def create_env_variables():
             with open(dotenv_path, "a") as f:
                 f.write("FILESPATH='./FILES'\n")
 
-        if os.getenv('LOG') is None:
-            print('ADDING LOG into .env')
-            with open(dotenv_path, "a") as f:
-                f.write(f"LOG=''\n")
-
-        if os.getenv('INVITE') is None:
-            print('ADDING INVITE into .env')
-            with open(dotenv_path, "a") as f:
-                f.write(f"INVITE=''\n")
-
-        if os.getenv('q1') is None:
-            print('ADDING q1 into .env')
-            with open(dotenv_path, "a") as f:
-                f.write(f"q1='question 1'\n")
-        if os.getenv('q2') is None:
-            print('ADDING q2 into .env')
-            with open(dotenv_path, "a") as f:
-                f.write(f"q2='question 2'\n")
-        if os.getenv('q3') is None:
-            print('ADDING q3 into .env')
-            with open(dotenv_path, "a") as f:
-                f.write(f"q3='question 3'\n")
-
-
-
 async def purge(guild:discord.Guild, name:str):
     for channel in guild.channels:
         if channel.name == name:
@@ -79,15 +54,18 @@ async def create_channel(guild:discord.Guild,channelName:str):
     return await guild.create_text_channel(channelName)
                 
 async def info(bot:discord.Bot | discord.Client,info):
-    load_dotenv()
-    if os.getenv('LOG') != ' ':
-        logChannel = bot.get_channel(int(os.getenv('LOG')))
-        if logChannel:
-            await logChannel.send(info)
+    for g in bot.guilds:
+        if 'admin' in g.name.lower():
+            logChannel = bot.get_channel(g.id)
+            if logChannel:
+                await logChannel.send(info)
+            return
             
 async def error(bot:discord.Bot | discord.Client, error):
-    load_dotenv()
-    if os.getenv('LOG'):
-        logChannel = bot.get_channel(int(os.getenv('LOG')))
-        if logChannel:
-            await logChannel.send(f'Es ist ein Fehler aufgetreten ```{error}```')
+    for g in bot.guilds:
+        if 'admin' in g.name.lower():
+            logChannel = bot.get_channel(g.id)
+            if logChannel:
+                await logChannel.send(f'Es ist ein Fehler aufgetreten ```{error}```')
+            return
+    
