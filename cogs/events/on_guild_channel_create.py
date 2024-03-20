@@ -5,7 +5,7 @@ from database.channels import Channels
 from lib.helper import update_env_channel_variable
 from lib.helper import info
 import os
-from dotenv import load_dotenv,dotenv_values, set_key
+from dotenv import load_dotenv
 
 
 class OnChannelCreate(commands.Cog):

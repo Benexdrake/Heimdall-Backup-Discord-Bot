@@ -1,5 +1,4 @@
 import discord
-import json
 
 from database.guilds import Guilds
 

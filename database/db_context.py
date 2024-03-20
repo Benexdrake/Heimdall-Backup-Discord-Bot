@@ -54,18 +54,10 @@ class DbContext:
             constraint fk_Channel_Message foreign key(channelId) references Channels(id)
         );
         """
-
-        guids = """
-        create table Guids
-        (
-            guid varchar(64) primary key
-        );
-        """
         
         self.execute(guilds)
         self.execute(channels)
         self.execute(messages)
-        self.execute(guids)
         print('Database Created')
 
     def execute(self,query:str):

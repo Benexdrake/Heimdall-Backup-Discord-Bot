@@ -7,7 +7,6 @@ from database.channels import Channels
 from database.guilds import Guilds
 from lib.helper import create_channel
 from lib.helper import create_invite_link, purge, update_env_variable
-from logic.bifroest_logic import BifroestLogic
 
 class OnReadyLogic:
     def __init__(self, bot:discord.Bot):
@@ -27,9 +26,6 @@ class OnReadyLogic:
                     await purge(guild,'invite')
                         
         load_dotenv()
-        newChannel = await BifroestLogic(self.bot).create()
-        await self.insert_update_guilds_channels(self.bot.guilds)
-        await BifroestLogic(self.bot).send(newChannel)
         await self.sendServerInfos()
 
     async def insert_update_guilds_channels(self, guilds):
